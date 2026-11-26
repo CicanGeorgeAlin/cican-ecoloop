@@ -173,6 +173,7 @@ function save(){localStorage.setItem(KEY,JSON.stringify(data));render();renderJo
 function totals(){var ok=data.surveys.filter(function(x){return x.status==='approved'||x.status==='paid'}),earned=ok.reduce(function(a,x){return a+n(x.amount)},0),mins=data.surveys.reduce(function(a,x){return a+n(x.minutes)},0),reserved=data.surveys.filter(function(x){return x.status==='approved'||x.status==='paid'}).reduce(function(a,x){return a+n(x.reserved)},0),returned=data.recycling.reduce(function(a,x){return a+n(x.n15)+n(x.n25)},0),refund=data.recycling.reduce(function(a,x){return a+(x.refund===''||x.refund==null?n(x.n15)*.15+n(x.n25)*.25:n(x.refund))},0);return{earned:earned,mins:mins,reserved:reserved,returned:returned,refund:refund,equiv:Math.floor((earned+1e-8)/.25)}}
 function tab(id){document.querySelectorAll('.nav button').forEach(function(b){b.classList.toggle('active',b.dataset.tab===id)});document.querySelectorAll('.view').forEach(function(v){v.classList.toggle('active',v.id===id)})}
 document.querySelectorAll('.nav button').forEach(function(b){b.addEventListener('click',function(){tab(b.dataset.tab)})});
+document.querySelectorAll('.tool-link').forEach(function(b){b.addEventListener('click',function(){tab(b.dataset.tab)})});
 
 function durationText(ms){var sec=Math.max(0,Math.floor(ms/1000)),hh=Math.floor(sec/3600),mm=Math.floor((sec%3600)/60),ss=sec%60;return [hh,mm,ss].map(function(v){return String(v).padStart(2,'0')}).join(':')}
 function prettyTime(ms){var mins=Math.round(ms/60000);return mins>=60?Math.floor(mins/60)+'h '+mins%60+'m':mins+'m'}
