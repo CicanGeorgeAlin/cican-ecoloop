@@ -17,9 +17,9 @@ Open `index.html` in a modern browser. Records are stored locally in that browse
 
 ## GitHub Pages deployment
 1. Open **Settings → Pages** in this repository.
-2. Under **Build and deployment → Source**, select **GitHub Actions**.
-3. The workflow in `.github/workflows/deploy.yml` will publish the site after a push to `main` or a manual workflow run.
-4. Check **Actions** and wait for **Deploy CICAN ECOLOOP to GitHub Pages** to complete successfully.
+2. Under **Build and deployment → Source**, select **Deploy from a branch**.
+3. Select branch **main** and folder **/ (root)**, then press **Save**.
+4. Wait for GitHub Pages to publish the site. Future commits to `main` will update it automatically.
 
 Expected website URL: https://cicangeorgealin.github.io/cican-ecoloop/
 
