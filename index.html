@@ -16,12 +16,34 @@
 .journey-item{background:var(--p);border:1px solid var(--line);border-radius:13px;padding:13px}
 .journey-item-top{display:flex;justify-content:space-between;gap:10px;align-items:start}
 @media(max-width:520px){.metric-row{grid-template-columns:repeat(2,1fr)}.timer-panel{padding:16px}}
+
+.shell{max-width:760px;padding:16px 14px calc(105px + env(safe-area-inset-bottom))}
+.top{margin-bottom:12px}.top .pill{display:none}
+.app-nav{position:fixed;z-index:20;left:0;right:0;bottom:0;margin:0;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:rgba(10,16,11,.97);backdrop-filter:blur(16px);border-top:1px solid var(--line);justify-content:center;gap:7px}
+.app-nav button{flex:1;max-width:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:7px 5px;border:0;background:transparent;color:var(--muted);font-size:11px;min-height:49px}
+.app-nav button span{font-size:19px;line-height:1.1}.app-nav button.active{background:#1b2a1d;color:var(--g);border-radius:12px}
+.hero{display:none}#journey .head{margin:5px 0 12px}#journey .head h2{font-size:25px}
+.timer-panel{padding:21px}.timer-display{font-size:clamp(52px,14vw,76px);margin:18px 0}
+.timer-actions{display:grid;grid-template-columns:1fr 1fr}.timer-actions .btn{min-height:52px;font-size:15px}#journey-start{grid-column:1/-1;min-height:62px;font-size:18px}
+.quick-panel{margin-top:12px;padding:15px}.quick-counts{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:13px 0}
+.quick-counts>div{background:#0b130d;border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0}
+.quick-counts small{display:block;color:var(--muted);font-size:10px}.quick-counts b{display:block;color:var(--g);font-size:19px;margin-top:3px;font-variant-numeric:tabular-nums}
+.quick-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.quick-action{border:1px solid #3b4d3d;border-radius:14px;background:#17231a;color:var(--txt);padding:13px 9px;min-height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:inherit;cursor:pointer}
+.quick-action strong{font-size:22px;color:var(--g);line-height:1.2}.quick-action span{font-weight:800;font-size:14px}.quick-action small{font-size:10px;color:var(--muted)}
+.quick-action.survey{border-color:#647f39;background:#1d2c1b}.quick-action.return strong{font-size:23px}.quick-action:disabled{opacity:.35;cursor:not-allowed}
+.quick-survey-form{margin-top:13px;padding:12px;border:1px solid #49633d;border-radius:12px;background:#0e1710}
+.quick-survey-form label{display:block;font-size:12px;color:#dce8d8;font-weight:700;margin-bottom:7px}
+.quick-survey-entry{display:grid;grid-template-columns:1fr auto auto;gap:7px}.quick-survey-entry input{min-width:0;background:#09100b;border:1px solid #405443;border-radius:9px;color:white;padding:11px;font:inherit}
+.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tool-link{display:flex;flex-direction:column;text-align:left;gap:5px;padding:16px;border:1px solid var(--line);border-radius:15px;background:var(--p);color:var(--txt);min-height:90px}
+.tool-link b{font-size:14px}.tool-link span{font-size:11px;color:var(--muted)}
+@media(max-width:520px){.shell{padding:12px 11px calc(100px + env(safe-area-inset-bottom))}.timer-panel{padding:17px}.quick-panel{padding:12px}.quick-survey-entry{grid-template-columns:1fr 1fr}.quick-survey-entry input{grid-column:1/-1}.tool-grid{grid-template-columns:1fr 1fr}.tool-link{padding:13px;min-height:84px}}
 </style></head><body><main class="shell">
 <header class="top"><div class="brand"><div class="mark">C</div><div><h1>CICAN ECOLOOP</h1><small>INVEST TIME · COMPOUND VALUE · RECYCLE</small></div></div><span class="pill">2026–2027 PROJECT</span></header>
-<section class="hero"><div class="eyebrow">THE CICAN ECOLOOP PHILOSOPHY</div><h2>One journey. Two opportunities. <span>Make every minute count.</span></h2><p>Complete surveys while walking, look out for eligible deposit containers, and return them safely. Combine financial opportunity with positive environmental action — then measure the real results.</p></section>
-<nav class="nav"><button class="active" data-tab="method">The Method</button><button data-tab="journey">Journey tracker</button><button data-tab="dashboard">Overview</button><button data-tab="surveys">Surveys</button><button data-tab="recycling">Recycling</button><button data-tab="calculator">Calculator</button><button data-tab="book">Book</button><button data-tab="data">Settings</button></nav>
 
-<section id="method" class="view active">
+<nav class="nav app-nav"><button class="active" data-tab="journey"><span>◉</span> Journey</button><button data-tab="dashboard"><span>▤</span> History</button><button data-tab="method"><span>ⓘ</span> Method</button><button data-tab="tools"><span>＋</span> Tools</button></nav>
+
+<section id="method" class="view">
   <div class="head"><div><h2>The Combined Return Method</h2><p>The philosophy and practical manual behind CICAN ECOLOOP.</p></div><span class="tag">OUR PRINCIPLE</span></div>
   <div class="card" style="background:linear-gradient(135deg,#192b1d,#111912);border-color:#49633d">
     <div class="eyebrow">24 HOURS. ONE RESOURCE WE ALL SHARE.</div>
@@ -67,7 +89,7 @@
 </section>
 
 
-<section id="journey" class="view">
+<section id="journey" class="view active">
  <div class="head"><div><h2>Combined Journey</h2><p>One clock for the whole journey. Record both kinds of return.</p></div><span class="tag">LIVE EXPERIMENT</span></div>
  <div class="timer-panel">
   <div class="eyebrow" id="timer-status">READY WHEN YOU ARE</div>
@@ -80,6 +102,18 @@
    <button class="btn" id="journey-finish" disabled>Finish journey</button>
   </div>
   <p class="hint" id="timer-hint">You can leave and return to this page; an active timer is saved on this device.</p>
+ </div>
+ <div class="card quick-panel">
+  <div class="row"><div><h3 style="margin:0">Quick actions</h3><span class="hint">Tap once as things happen.</span></div><span class="tag" id="quick-state">READY</span></div>
+  <div class="quick-counts"><div><small>Survey rewards</small><b id="q-survey-total">€0.00</b></div><div><small>Bottles found</small><b id="q-found-total">0</b></div><div><small>Containers returned</small><b id="q-returned-total">0</b></div></div>
+  <div class="quick-buttons">
+   <button class="quick-action survey" id="q-survey-open" disabled><strong>✓</strong><span>Survey finished</span><small>Add reward</small></button>
+   <button class="quick-action" id="q-found" disabled><strong>＋</strong><span>Found a bottle</span><small>Count one</small></button>
+   <button class="quick-action return" id="q-return15" disabled><strong>15c</strong><span>Returned</span><small>One container</small></button>
+   <button class="quick-action return" id="q-return25" disabled><strong>25c</strong><span>Returned</span><small>One container</small></button>
+  </div>
+  <form id="q-survey-form" class="quick-survey-form" hidden><label for="q-survey-amount">Survey reward actually approved or paid (€)</label><div class="quick-survey-entry"><input id="q-survey-amount" type="number" min="0" step=".01" inputmode="decimal" placeholder="e.g. 0.75" required><button class="btn primary">Save reward</button><button class="btn" type="button" id="q-survey-cancel">Cancel</button></div><span class="hint">Unpaid or rejected surveys are not earnings.</span></form>
+  <p class="hint" id="quick-feedback" aria-live="polite">Start your journey to activate the quick actions.</p>
  </div>
  <div class="cols">
   <div class="card"><h3>What to do during the journey</h3><ol class="muted"><li>Walk safely and look for eligible deposit containers.</li><li>Complete surveys only when stationary and safe.</li><li>Keep track of containers collected and returned.</li><li>Finish at the end and enter actual rewards and refunds.</li></ol></div>
@@ -118,7 +152,8 @@
  <div id="journey-history" class="journey-history"><div class="empty">No combined journeys yet. Start your first one above.</div></div>
  <div class="notice">Journey records are separate from the older survey and recycling logs so the same earnings or containers are not automatically double-counted. Export a backup in Settings to keep your data safe.</div>
 </section>
-\n<section id="dashboard" class="view"><div class="head"><div><h2>Your dashboard</h2><p>Money, equivalents and real-world action — kept separate.</p></div><span class="tag">LOCAL DATA</span></div>
+\n<section id="tools" class="view"><div class="head"><div><h2>Your tools</h2><p>Everything else, kept out of the way until you need it.</p></div></div><div class="tool-grid"><button class="tool-link" data-tab="surveys"><b>Survey bank</b><span>Detailed survey records and payment status</span></button><button class="tool-link" data-tab="recycling"><b>Recycling log</b><span>Separate recycling sessions and refunds</span></button><button class="tool-link" data-tab="calculator"><b>Value calculator</b><span>Compare amounts, time and container values</span></button><button class="tool-link" data-tab="book"><b>Recycling book</b><span>Connect your existing publication</span></button><button class="tool-link" data-tab="data"><b>Settings & backup</b><span>Targets, export and restore your records</span></button></div></section>
+<section id="dashboard" class="view"><div class="head"><div><h2>Your dashboard</h2><p>Money, equivalents and real-world action — kept separate.</p></div><span class="tag">LOCAL DATA</span></div>
 <div class="grid"><div class="stat"><label>Approved / paid earnings</label><strong id="earned">€0.00</strong><small>Confirmed survey value</small></div><div class="stat"><label>25c equivalents</label><strong class="green" id="equiv">0</strong><small>Calculated, not recycled</small></div><div class="stat"><label>Actually returned</label><strong id="returned">0</strong><small>Physical containers logged</small></div><div class="stat"><label>Survey time</label><strong id="time">0m</strong><small>All recorded survey time</small></div></div>
 <div class="cols"><div class="card"><div class="row"><h3>2026–2027 challenge</h3><span class="tag" id="goal-label">Target: 1,000</span></div><div class="row" style="margin:12px 0 8px"><b>Physical containers returned</b><b class="green" id="goal-count">0 / 1,000</b></div><div class="progress"><span id="goal-bar"></span></div><p class="hint">Only actual recycling entries count towards this goal.</p></div><div class="card"><h3>Financial snapshot</h3><div class="row"><span class="muted">Survey earnings</span><b id="snap-earned">€0.00</b></div><div class="row" style="margin-top:9px"><span class="muted">Container equivalents</span><b id="snap-equiv">0</b></div><div class="row" style="margin-top:9px"><span class="muted">Actual deposit refunds</span><b id="snap-refund">€0.00</b></div><div class="row" style="margin-top:9px"><span class="muted">Money reserved</span><b id="snap-reserved">€0.00</b></div></div></div>
 <div class="head"><div><h2>Recent activity</h2><p>Your latest survey and recycling entries.</p></div></div><div class="card" id="recent"><div class="empty">No activity yet. Add your first survey or recycling session.</div></div><div class="notice">Equivalent containers are a calculation, not proof of recycling. Physical totals only include containers you actually record as returned.</div></section>
@@ -148,6 +183,13 @@ function renderJourney(){
  $('timer-status').textContent=!timer?'READY WHEN YOU ARE':timer.running?'JOURNEY IN PROGRESS':'JOURNEY PAUSED';
  $('journey-start').disabled=!!timer;$('journey-pause').disabled=!timer||!timer.running;$('journey-resume').disabled=!timer||timer.running;$('journey-finish').disabled=!timer;
  $('timer-hint').textContent=timer?(timer.running?'Timer is running. Keep your phone safely away while walking.':'Timer paused. Resume when you are ready.'):'Start the clock when your journey begins.';
+ var active=!!timer&&timer.running;
+ ['q-survey-open','q-found','q-return15','q-return25'].forEach(function(id){$(id).disabled=!active});
+ $('quick-state').textContent=!timer?'READY':active?'ACTIVE':'PAUSED';
+ $('q-survey-total').textContent=money(timer?timer.surveyAmount:0);
+ $('q-found-total').textContent=timer?n(timer.collected):0;
+ $('q-returned-total').textContent=timer?n(timer.n15)+n(timer.n25):0;
+
  var js=data.journeys||[],sumMs=js.reduce(function(a,x){return a+n(x.durationMs)},0),sur=js.reduce(function(a,x){return a+n(x.surveyAmount)},0),ref=js.reduce(function(a,x){return a+journeyRefund(x)},0),cont=js.reduce(function(a,x){return a+n(x.n15)+n(x.n25)},0),collected=js.reduce(function(a,x){return a+n(x.collected)},0),total=sur+ref;
  $('j-total-money').textContent=money(total);$('j-hourly').textContent=money(sumMs?total/(sumMs/3600000):0);$('j-total-time').textContent=prettyTime(sumMs);$('j-total-containers').textContent=cont;$('j-total-collected').textContent=collected;$('j-total-survey').textContent=money(sur);$('j-total-refund').textContent=money(ref);
  var hist=$('journey-history');
@@ -155,11 +197,20 @@ function renderJourney(){
 }
 function journeyRefund(x){return x.refund===''||x.refund==null?n(x.n15)*.15+n(x.n25)*.25:n(x.refund)}
 var timerTick=null;
-function startJourney(){if(data.timer)return;data.timer={startedAt:Date.now(),elapsedMs:0,running:true};save();}
+function startJourney(){if(data.timer)return;data.timer={startedAt:Date.now(),elapsedMs:0,running:true,surveyAmount:0,completed:0,attempted:0,collected:0,n15:0,n25:0,refund:0};$('quick-feedback').textContent='Journey started. Your quick actions are ready.';save()}
 function pauseJourney(){if(!data.timer||!data.timer.running)return;data.timer.elapsedMs=timerElapsed();data.timer.running=false;data.timer.startedAt=0;save()}
 function resumeJourney(){if(!data.timer||data.timer.running)return;data.timer.startedAt=Date.now();data.timer.running=true;save();}
-function finishJourney(){if(!data.timer)return;var ms=timerElapsed();if(ms<1000&&!confirm('This journey is less than one second. Finish anyway?'))return;data.pendingJourney={durationMs:ms,date:today()};data.timer=null;save();$('journey-save-card').hidden=false;$('journey-duration-label').textContent='Recorded elapsed time: '+prettyTime(ms);$('j-date').value=today();$('journey-save-card').scrollIntoView({behavior:'smooth',block:'start'});renderJourney()}
+function finishJourney(){if(!data.timer)return;var ms=timerElapsed();if(ms<1000&&!confirm('This journey is less than one second. Finish anyway?'))return;data.pendingJourney=Object.assign({durationMs:ms,date:today()},data.timer);data.timer=null;save();$('journey-save-card').hidden=false;$('journey-duration-label').textContent='Recorded elapsed time: '+prettyTime(ms);$('j-date').value=today();$('j-survey').value=n(data.pendingJourney.surveyAmount).toFixed(2);$('j-completed').value=n(data.pendingJourney.completed);$('j-attempted').value=n(data.pendingJourney.attempted);$('j-collected').value=n(data.pendingJourney.collected);$('j-15').value=n(data.pendingJourney.n15);$('j-25').value=n(data.pendingJourney.n25);$('j-refund').value=n(data.pendingJourney.refund).toFixed(2);$('journey-save-card').scrollIntoView({behavior:'smooth',block:'start'});renderJourney()}
 function resetJourneyDraft(){$('journey-form').reset();$('journey-save-card').hidden=true;data.pendingJourney=null;save()}
+
+function quickSave(){save();$('quick-feedback').textContent='Saved to this journey.'}
+$('q-survey-open').addEventListener('click',function(){$('q-survey-form').hidden=false;$('q-survey-amount').focus()});
+$('q-survey-cancel').addEventListener('click',function(){$('q-survey-form').hidden=true;$('q-survey-amount').value=''});
+$('q-survey-form').addEventListener('submit',function(e){e.preventDefault();if(!data.timer||!data.timer.running)return;var amount=n($('q-survey-amount').value);if(amount<=0){alert('Enter the actual survey reward.');return}data.timer.surveyAmount=n(data.timer.surveyAmount)+amount;data.timer.completed=n(data.timer.completed)+1;data.timer.attempted=n(data.timer.attempted)+1;$('q-survey-form').hidden=true;$('q-survey-amount').value='';quickSave();$('quick-feedback').textContent='Survey reward '+money(amount)+' added.'});
+$('q-found').addEventListener('click',function(){if(!data.timer||!data.timer.running)return;data.timer.collected=n(data.timer.collected)+1;quickSave();$('quick-feedback').textContent='Bottle found. Total collected: '+data.timer.collected});
+$('q-return15').addEventListener('click',function(){if(!data.timer||!data.timer.running)return;data.timer.n15=n(data.timer.n15)+1;data.timer.refund=Math.round((n(data.timer.refund)+.15)*100)/100;quickSave();$('quick-feedback').textContent='15c container returned and recorded.'});
+$('q-return25').addEventListener('click',function(){if(!data.timer||!data.timer.running)return;data.timer.n25=n(data.timer.n25)+1;data.timer.refund=Math.round((n(data.timer.refund)+.25)*100)/100;quickSave();$('quick-feedback').textContent='25c container returned and recorded.'});
+
 $('journey-start').addEventListener('click',startJourney);$('journey-pause').addEventListener('click',pauseJourney);$('journey-resume').addEventListener('click',resumeJourney);$('journey-finish').addEventListener('click',finishJourney);
 $('journey-discard').addEventListener('click',function(){if(confirm('Discard this unfinished journey record?'))resetJourneyDraft()});
 $('journey-form').addEventListener('submit',function(e){e.preventDefault();if(!data.pendingJourney){alert('No finished journey is waiting to be saved.');return}var p=data.pendingJourney,x={id:String(Date.now())+Math.random(),date:$('j-date').value,durationMs:p.durationMs,surveyAmount:n($('j-survey').value),completed:n($('j-completed').value),attempted:n($('j-attempted').value),collected:n($('j-collected').value),surveyMinutes:n($('j-survey-minutes').value),n15:n($('j-15').value),n25:n($('j-25').value),refund:$('j-refund').value,distance:n($('j-distance').value),effort:n($('j-effort').value),notes:$('j-notes').value.trim()};if(x.completed>x.attempted){alert('Completed surveys cannot exceed surveys attempted.');return}if(x.n15+x.n25<0){alert('Container counts must be zero or higher.');return}if(x.surveyAmount<0||n(x.refund)<0){alert('Earnings and refunds cannot be negative.');return}(data.journeys||(data.journeys=[])).push(x);data.pendingJourney=null;$('journey-form').reset();$('journey-save-card').hidden=true;save();alert('Journey saved. Your combined return has been updated.');tab('journey')});
