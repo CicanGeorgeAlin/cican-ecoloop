@@ -125,19 +125,24 @@
  <div class="card journey-form" id="journey-save-card" hidden>
   <div class="row"><div><h3 style="margin:0">Save completed journey</h3><span class="hint" id="journey-duration-label">Elapsed time</span></div><span class="tag">ACTUAL RESULTS</span></div>
   <form id="journey-form" style="margin-top:13px">
-   <div class="formgrid">
-    <div class="field"><label>Date</label><input id="j-date" type="date" required></div>
-    <div class="field"><label>Survey earnings actually received / approved (€)</label><input id="j-survey" type="number" min="0" step=".01" inputmode="decimal" value="0" required></div>
-    <div class="field"><label>Surveys completed</label><input id="j-completed" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
-    <div class="field"><label>Surveys attempted (including rejected / unpaid)</label><input id="j-attempted" type="number" min="0" step="1" inputmode="numeric" value="0"></div><div class="field"><label>Eligible containers collected on route</label><input id="j-collected" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
-    <div class="field"><label>Survey minutes (overlapping time, informational)</label><input id="j-survey-minutes" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
-    <div class="field"><label>Eligible 15c containers returned</label><input id="j-15" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
-    <div class="field"><label>Eligible 25c containers returned</label><input id="j-25" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
-    <div class="field"><label>Actual recycling refund (€)</label><input id="j-refund" type="number" min="0" step=".01" inputmode="decimal" placeholder="Leave blank to calculate from containers"></div>
-    <div class="field"><label>Distance walked (km, optional)</label><input id="j-distance" type="number" min="0" step=".01" inputmode="decimal" placeholder="e.g. 2.4"></div>
-    <div class="field"><label>Effort (1 easy – 5 demanding)</label><select id="j-effort"><option value="1">1 · Easy</option><option value="2">2 · Light</option><option value="3" selected>3 · Moderate</option><option value="4">4 · Demanding</option><option value="5">5 · Very demanding</option></select></div>
-    <div class="field full"><label>Notes (optional)</label><textarea id="j-notes" placeholder="Route, weather, what worked, what did not…"></textarea></div>
-   </div>
+   <div class="field"><label>Journey date</label><input id="j-date" type="date" required></div>
+   <p class="hint">Your quick actions have already filled in the journey totals. You can save now, or open the details below to review or correct them.</p>
+   <details class="optional">
+    <summary>Review or edit journey details</summary>
+    <div class="formgrid" style="margin-top:12px">
+     <div class="field"><label>Survey earnings actually received / approved (€)</label><input id="j-survey" type="number" min="0" step=".01" inputmode="decimal" value="0" required></div>
+     <div class="field"><label>Surveys completed</label><input id="j-completed" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
+     <div class="field"><label>Surveys attempted (including rejected / unpaid)</label><input id="j-attempted" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
+     <div class="field"><label>Eligible containers collected on route</label><input id="j-collected" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
+     <div class="field"><label>Eligible 15c containers returned</label><input id="j-15" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
+     <div class="field"><label>Eligible 25c containers returned</label><input id="j-25" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
+     <div class="field"><label>Actual recycling refund (€)</label><input id="j-refund" type="number" min="0" step=".01" inputmode="decimal" placeholder="Leave blank to calculate from containers"></div>
+     <div class="field"><label>Distance walked (km, optional)</label><input id="j-distance" type="number" min="0" step=".01" inputmode="decimal" placeholder="e.g. 2.4"></div>
+     <div class="field"><label>Effort (1 easy – 5 demanding)</label><select id="j-effort"><option value="1">1 · Easy</option><option value="2">2 · Light</option><option value="3" selected>3 · Moderate</option><option value="4">4 · Demanding</option><option value="5">5 · Very demanding</option></select></div>
+     <div class="field"><label>Survey minutes (optional, informational only)</label><input id="j-survey-minutes" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
+     <div class="field full"><label>Notes (optional)</label><textarea id="j-notes" placeholder="Route, weather, what worked, what did not…"></textarea></div>
+    </div>
+   </details>
    <div class="actions"><button class="btn primary">Save journey</button><button class="btn" type="button" id="journey-discard">Discard this journey</button></div>
    <p class="hint">Only enter rewards actually earned and refunds actually received. Pending survey amounts should not be counted yet.</p>
   </form>
@@ -169,7 +174,7 @@
 <script>
 (function(){
 'use strict';
-var KEY='cican-ecoloop-v1', $=function(id){return document.getElementById(id)}, today=function(){return new Date().toISOString().slice(0,10)}, money=function(n){return '€'+(Number(n)||0).toFixed(2)}, n=function(x){return Number(x)||0}, esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var KEY='cican-ecoloop-v1', $=function(id){return document.getElementById(id)}, today=function(){var d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}, money=function(n){return '€'+(Number(n)||0).toFixed(2)}, n=function(x){return Number(x)||0}, esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 var data={surveys:[],recycling:[],goal:1000,book:{url:'',title:''}};
 function load(){try{var d=JSON.parse(localStorage.getItem(KEY)||'{}');data=Object.assign(data,d);if(!Array.isArray(data.surveys))data.surveys=[];if(!Array.isArray(data.recycling))data.recycling=[];if(!Array.isArray(data.journeys))data.journeys=[];if(data.pendingJourney&&data.pendingJourney.durationMs){$('journey-save-card').hidden=false;$('journey-duration-label').textContent='Recorded elapsed time: '+prettyTime(data.pendingJourney.durationMs);$('j-date').value=data.pendingJourney.date||today()} }catch(e){console.warn(e)}}
 function save(){localStorage.setItem(KEY,JSON.stringify(data));render();renderJourney()}
@@ -210,10 +215,10 @@ function renderJourney(){
 }
 function journeyRefund(x){return x.refund===''||x.refund==null?n(x.n15)*.15+n(x.n25)*.25:n(x.refund)}
 var timerTick=null;
-function startJourney(){if(data.timer)return;data.timer={startedAt:Date.now(),elapsedMs:0,running:true,undo:null,surveyAmount:0,surveyMinutes:0,completed:0,attempted:0,collected:0,n15:0,n25:0,refund:0};$('quick-feedback').textContent='Journey started. Your quick actions are ready.';save()}
+function startJourney(){if(data.timer)return;data.timer={date:today(),startedAt:Date.now(),elapsedMs:0,running:true,undo:null,surveyAmount:0,surveyMinutes:0,completed:0,attempted:0,collected:0,n15:0,n25:0,refund:0};$('quick-feedback').textContent='Journey started. Your quick actions are ready.';save()}
 function pauseJourney(){if(!data.timer||!data.timer.running)return;data.timer.elapsedMs=timerElapsed();data.timer.running=false;data.timer.startedAt=0;save()}
 function resumeJourney(){if(!data.timer||data.timer.running)return;data.timer.startedAt=Date.now();data.timer.running=true;save();}
-function finishJourney(){if(!data.timer)return;var ms=timerElapsed();if(ms<1000&&!confirm('This journey is less than one second. Finish anyway?'))return;data.pendingJourney=Object.assign({durationMs:ms,date:today()},data.timer);data.timer=null;save();$('journey-save-card').hidden=false;$('journey-duration-label').textContent='Recorded elapsed time: '+prettyTime(ms);$('j-date').value=today();$('j-survey').value=n(data.pendingJourney.surveyAmount).toFixed(2);$('j-survey-minutes').value=n(data.pendingJourney.surveyMinutes);$('j-completed').value=n(data.pendingJourney.completed);$('j-attempted').value=n(data.pendingJourney.attempted);$('j-collected').value=n(data.pendingJourney.collected);$('j-15').value=n(data.pendingJourney.n15);$('j-25').value=n(data.pendingJourney.n25);$('j-refund').value=n(data.pendingJourney.refund).toFixed(2);$('journey-save-card').scrollIntoView({behavior:'smooth',block:'start'});renderJourney()}
+function finishJourney(){if(!data.timer)return;var ms=timerElapsed();if(ms<1000&&!confirm('This journey is less than one second. Finish anyway?'))return;data.pendingJourney=Object.assign({durationMs:ms,date:data.timer.date||today()},data.timer);data.timer=null;save();$('journey-save-card').hidden=false;$('journey-duration-label').textContent='Recorded elapsed time: '+prettyTime(ms);$('j-date').value=today();$('j-survey').value=n(data.pendingJourney.surveyAmount).toFixed(2);$('j-survey-minutes').value=n(data.pendingJourney.surveyMinutes);$('j-completed').value=n(data.pendingJourney.completed);$('j-attempted').value=n(data.pendingJourney.attempted);$('j-collected').value=n(data.pendingJourney.collected);$('j-15').value=n(data.pendingJourney.n15);$('j-25').value=n(data.pendingJourney.n25);$('j-refund').value=n(data.pendingJourney.refund).toFixed(2);$('journey-save-card').scrollIntoView({behavior:'smooth',block:'start'});renderJourney()}
 function resetJourneyDraft(){$('journey-form').reset();$('journey-save-card').hidden=true;data.pendingJourney=null;save()}
 
 function quickSave(){save();$('quick-feedback').textContent='Saved to this journey.'}
