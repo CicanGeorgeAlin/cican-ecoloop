@@ -1,33 +1,53 @@
 # CICAN ECOLOOP
 
-**Earn. Equate. Recycle.**
+**Make Every Journey Count.**
 
-A mobile-first personal environmental tracker connecting survey earnings, time invested, deposit-value container equivalents, and physical recycling records.
+CICAN ECOLOOP is a mobile-first experiment in combining survey activity with safe, purposeful walking and eligible deposit-container returns. Its central idea is the **Combined Return Method**: use one journey to create more than one kind of value, and measure the result honestly.
 
-## V1 features
-- Survey bank with pending, approved and paid statuses
-- Time-to-value calculator and reverse target calculator
-- Separate 15c and 25c physical recycling log
-- Personal recycling goal and dashboard
-- Local browser storage with JSON backup/restore and CSV export
-- Recycling book link section
+## The Combined Return Method
+
+1. Start one journey timer when you leave.
+2. Walk safely and look for eligible deposit containers.
+3. Complete surveys only when stationary and safe.
+4. Return eligible containers through an authorised return point.
+5. Finish the journey and record actual survey rewards, actual refunds, containers returned, distance and effort.
+6. Review the combined return per hour.
+
+**Accounting rule:** the journey clock measures total elapsed time once. Survey minutes may be recorded for analysis, but overlapping survey time is never added a second time.
+
+## Features
+
+- **The Method:** the project philosophy and practical manual.
+- **Combined Journey Tracker:** persistent start, pause, resume and finish timer.
+- **Combined results:** actual survey rewards plus actual deposit refunds, divided by total journey time.
+- **Journey history:** review and delete saved journey records.
+- **Survey bank:** separately record survey amounts, time, payment status and notes.
+- **Physical recycling log:** separately record eligible 15c and 25c containers and refunds.
+- **Calculator and dashboard:** compare values and track physical recycling goals.
+- **Book section:** connect an existing recycling publication.
+- **Data portability:** JSON backup/restore and CSV export include combined journey records.
+
+## Data, privacy and limitations
+
+- The site is static and does not require an account.
+- Records are stored in the browser on the device being used. They are not automatically synchronised between devices or shared with other visitors.
+- Export JSON backups regularly if you want to preserve or move your records.
+- Journey records are kept separate from the older survey and recycling logs to avoid automatically double-counting entries.
+- Only enter survey rewards actually earned and refunds actually received. Pending rewards are not confirmed earnings.
+- Calculated deposit values are estimates. Scheme eligibility and machine acceptance determine the actual refund.
+- This project is a personal measurement tool, not a promise of income. Results depend on survey availability, qualification, container availability, walking distance and time.
+- Personal safety comes first. Do not use a phone while crossing roads or navigating hazards; stop somewhere safe before completing surveys. Never handle broken, sharp, contaminated or unsafe items.
 
 ## Run locally
-Open `index.html` in a modern browser. Records are stored locally in that browser. Export JSON backups regularly.
 
-## GitHub Pages deployment
-1. Open **Settings → Pages** in this repository.
-2. Under **Build and deployment → Source**, select **Deploy from a branch**.
-3. Select branch **main** and folder **/ (root)**, then press **Save**.
-4. Wait for GitHub Pages to publish the site. Future commits to `main` will update it automatically.
+Open `index.html` in a modern browser. No server or build step is required.
 
-Expected website URL: https://cicangeorgealin.github.io/cican-ecoloop/
+## GitHub Pages
 
-## Data and accounting principles
-- Calculated container equivalents are estimates, not physical recycling.
-- Only approved or paid survey entries count towards confirmed equivalents.
-- Physical recycling totals are based on explicitly recorded returned containers.
-- Refund estimates use €0.15 and €0.25 values; check current Irish scheme eligibility and rules before returning containers.
-- Records are stored in the browser on the device used. Export JSON backups to move or protect your data.
+The production site is intended to publish from the `main` branch, root folder:
+
+https://cicangeorgealin.github.io/cican-ecoloop/
+
+The protected original V1 baseline is kept on branch `v1-baseline-2026-11-26`.
 
 © CICAN GEORGE ALIN · CICAN ECOLOOP
