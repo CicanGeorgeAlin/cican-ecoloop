@@ -87,7 +87,7 @@
     <p style="color:#d0ddcf">This is a real-life experiment in personal efficiency, financial awareness and environmental responsibility. We have 24 hours. Let's make every journey count.</p>
     <b class="green">CICAN ECOLOOP — MAKE EVERY JOURNEY COUNT.</b>
   </div>
-  <div class="actions"><button class="btn primary" data-tab="surveys" onclick="document.querySelector('[data-tab=surveys]').click()">Record a survey</button><button class="btn" data-tab="recycling" onclick="document.querySelector('[data-tab=recycling]').click()">Log returned containers</button><button class="btn" onclick="document.querySelector('[data-tab=dashboard]').click()">View my progress</button></div>
+  <div class="actions"><button type="button" class="btn primary" id="method-record-survey">Record a survey</button><button type="button" class="btn" id="method-record-recycling">Log returned containers</button><button type="button" class="btn" id="method-view-progress">View my progress</button></div>
 </section>
 
 
@@ -180,6 +180,9 @@ function save(){var ok=true,snapshot=Object.assign({},data);delete snapshot.time
 function totals(){var ok=data.surveys.filter(function(x){return x.status==='approved'||x.status==='paid'}),earned=ok.reduce(function(a,x){return a+n(x.amount)},0),mins=data.surveys.reduce(function(a,x){return a+n(x.minutes)},0),reserved=data.surveys.filter(function(x){return x.status==='approved'||x.status==='paid'}).reduce(function(a,x){return a+n(x.reserved)},0),returned=data.recycling.reduce(function(a,x){return a+n(x.n15)+n(x.n25)},0),refund=data.recycling.reduce(function(a,x){return a+(x.refund===''||x.refund==null?n(x.n15)*.15+n(x.n25)*.25:n(x.refund))},0);return{earned:earned,mins:mins,reserved:reserved,returned:returned,refund:refund,equiv:Math.floor((earned+1e-8)/.25)}}
 function tab(id){if(!document.getElementById(id)||!document.getElementById(id).classList.contains('view'))return;document.querySelectorAll('.nav button').forEach(function(b){b.classList.toggle('active',b.dataset.tab===id||(['surveys','recycling','calculator','book','data'].includes(id)&&b.dataset.tab==='tools'))});document.querySelectorAll('.view').forEach(function(v){v.classList.toggle('active',v.id===id)});window.scrollTo(0,0)}
 document.querySelectorAll('.nav button').forEach(function(b){b.addEventListener('click',function(){tab(b.dataset.tab)})});
+document.getElementById('method-record-survey').addEventListener('click',function(){tab('surveys')});
+document.getElementById('method-record-recycling').addEventListener('click',function(){tab('recycling')});
+document.getElementById('method-view-progress').addEventListener('click',function(){tab('dashboard')});
 document.querySelectorAll('.tool-link').forEach(function(b){b.addEventListener('click',function(){tab(b.dataset.tab)})});document.querySelectorAll('.tools-back').forEach(function(b){b.addEventListener('click',function(){tab('tools')})});
 
 function durationText(ms){var sec=Math.max(0,Math.floor(ms/1000)),hh=Math.floor(sec/3600),mm=Math.floor((sec%3600)/60),ss=sec%60;return [hh,mm,ss].map(function(v){return String(v).padStart(2,'0')}).join(':')}
