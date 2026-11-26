@@ -24,7 +24,7 @@
 .app-nav button span{font-size:19px;line-height:1.1}.app-nav button.active{background:#1b2a1d;color:var(--g);border-radius:12px}
 .hero{display:none}#journey .head{margin:5px 0 12px}#journey .head h2{font-size:25px}
 .timer-panel{padding:21px}.timer-display{font-size:clamp(52px,14vw,76px);margin:18px 0}
-.timer-actions{display:grid;grid-template-columns:1fr 1fr}.timer-actions .btn{min-height:52px;font-size:15px}#journey-start{grid-column:1/-1;min-height:62px;font-size:18px}
+.timer-actions{display:grid;grid-template-columns:1fr 1fr}.timer-actions .btn{min-height:52px;font-size:15px}#journey-start{grid-column:1/-1;min-height:62px;font-size:18px}.secondary-timer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.secondary-timer-actions .btn{min-height:42px;font-size:13px}
 .quick-panel{margin-top:12px;padding:15px}.quick-counts{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:13px 0}
 .quick-counts>div{background:#0b130d;border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0}
 .quick-counts small{display:block;color:var(--muted);font-size:10px}.quick-counts b{display:block;color:var(--g);font-size:19px;margin-top:3px;font-variant-numeric:tabular-nums}
@@ -98,9 +98,6 @@
   <p style="color:#c5d0c5;margin:0">Start when you begin your journey. The clock includes walking, searching, survey pauses and the trip to the return machine. It counts elapsed journey time once.</p>
   <div class="timer-actions">
    <button class="btn primary" id="journey-start">Start journey</button>
-   <button class="btn" id="journey-pause" disabled>Pause</button>
-   <button class="btn" id="journey-resume" disabled>Resume</button>
-   <button class="btn" id="journey-finish" disabled>Finish journey</button>
   </div>
   <p class="hint" id="timer-hint">You can leave and return to this page; an active timer is saved on this device.</p>
  </div>
@@ -113,7 +110,12 @@
    <button class="quick-action return" id="q-return15" disabled><strong>15c</strong><span>Returned</span><small>One container</small></button>
    <button class="quick-action return" id="q-return25" disabled><strong>25c</strong><span>Returned</span><small>One container</small></button>
   </div><div class="undo-row"><button type="button" class="undo-btn" id="q-undo" disabled>↶ Undo last action</button></div>
-  <form id="q-survey-form" class="quick-survey-form" hidden><label for="q-survey-amount">Survey reward actually approved or paid (€)</label><div class="quick-survey-entry"><input id="q-survey-minutes" type="number" min="0" step="1" inputmode="numeric" placeholder="Minutes taken (optional)"><input id="q-survey-amount" type="number" min="0" step=".01" inputmode="decimal" placeholder="e.g. 0.75" required><button class="btn primary">Save reward</button><button class="btn" type="button" id="q-survey-cancel">Cancel</button></div><span class="hint">Unpaid or rejected surveys are not earnings.</span></form>
+  <form id="q-survey-form" class="quick-survey-form" hidden><label for="q-survey-amount">How much did this completed survey actually pay? (€)</label><div class="quick-survey-entry"><input id="q-survey-amount" type="number" min="0" step=".01" inputmode="decimal" placeholder="Enter reward, e.g. 0.25" required><button class="btn primary">Add reward</button><button class="btn" type="button" id="q-survey-cancel">Cancel</button></div><span class="hint">Enter only money actually approved or paid. No need to time each survey.</span></form>
+  <div class="timer-actions secondary-timer-actions">
+   <button class="btn" id="journey-pause" disabled>Pause journey</button>
+   <button class="btn" id="journey-resume" disabled>Resume journey</button>
+   <button class="btn" id="journey-finish" disabled>Finish journey</button>
+  </div>
   <p class="hint" id="quick-feedback" aria-live="polite">Start your journey to activate the quick actions.</p>
  </div>
  <div class="cols">
@@ -219,7 +221,7 @@ function setUndo(label,fields){var u={label:label,values:{}};fields.forEach(func
 $('q-undo').addEventListener('click',function(){if(!data.timer||!data.timer.undo)return;var u=data.timer.undo;Object.keys(u.values).forEach(function(k){data.timer[k]=u.values[k]});data.timer.undo=null;quickSave();$('quick-feedback').textContent='Undid: '+u.label});
 $('q-survey-open').addEventListener('click',function(){$('q-survey-form').hidden=false;$('q-survey-amount').focus()});
 $('q-survey-cancel').addEventListener('click',function(){$('q-survey-form').hidden=true;$('q-survey-amount').value=''});
-$('q-survey-form').addEventListener('submit',function(e){e.preventDefault();if(!data.timer||!data.timer.running)return;var amount=n($('q-survey-amount').value),mins=n($('q-survey-minutes').value);if(amount<=0){alert('Enter the actual survey reward.');return}setUndo('survey reward',['surveyAmount','surveyMinutes','completed','attempted']);data.timer.surveyAmount=n(data.timer.surveyAmount)+amount;data.timer.surveyMinutes=n(data.timer.surveyMinutes)+mins;data.timer.completed=n(data.timer.completed)+1;data.timer.attempted=n(data.timer.attempted)+1;$('q-survey-form').hidden=true;$('q-survey-amount').value='';$('q-survey-minutes').value='';quickSave();$('quick-feedback').textContent='Survey reward '+money(amount)+' added.'});
+$('q-survey-form').addEventListener('submit',function(e){e.preventDefault();if(!data.timer||!data.timer.running)return;var amount=n($('q-survey-amount').value);if(amount<=0){alert('Enter the actual survey reward.');return}setUndo('survey reward',['surveyAmount','completed','attempted']);data.timer.surveyAmount=n(data.timer.surveyAmount)+amount;data.timer.completed=n(data.timer.completed)+1;data.timer.attempted=n(data.timer.attempted)+1;$('q-survey-form').hidden=true;$('q-survey-amount').value='';quickSave();$('quick-feedback').textContent='Nice work! '+money(amount)+' survey reward added to your journey.'});
 $('q-found').addEventListener('click',function(){if(!data.timer||!data.timer.running)return;setUndo('bottle found',['collected']);data.timer.collected=n(data.timer.collected)+1;quickSave();$('quick-feedback').textContent='Bottle found. Total collected: '+data.timer.collected});
 $('q-return15').addEventListener('click',function(){if(!data.timer||!data.timer.running)return;setUndo('15c return',['n15','refund']);data.timer.n15=n(data.timer.n15)+1;data.timer.refund=Math.round((n(data.timer.refund)+.15)*100)/100;quickSave();$('quick-feedback').textContent='15c container returned and recorded.'});
 $('q-return25').addEventListener('click',function(){if(!data.timer||!data.timer.running)return;setUndo('25c return',['n25','refund']);data.timer.n25=n(data.timer.n25)+1;data.timer.refund=Math.round((n(data.timer.refund)+.25)*100)/100;quickSave();$('quick-feedback').textContent='25c container returned and recorded.'});
